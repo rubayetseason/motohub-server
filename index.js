@@ -18,19 +18,28 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const productsCollection = client.db("motoHub").collection("bikes");
+    const bookingsCollection = client.db("motoHub").collection("bookings");
 
+    //product part here
     app.get("/products", async (req, res) => {
       const query = {};
       const products = await productsCollection.find(query).toArray();
       res.send(products);
     });
 
-    app.get('/products/:brand', async (req,res) => {
+    app.get("/products/:brand", async (req, res) => {
       const brand = req.params.brand;
-      const query = {catagory : brand};
+      const query = { catagory: brand };
       const result = await productsCollection.find(query).toArray();
       res.send(result);
-    })
+    });
+
+    //booking part here
+    app.post("/bookings", async (req, res) => {
+      const booking = req.body;
+      const result = await bookingsCollection.insertOne(booking);
+      res.send(result);
+    });
   } finally {
   }
 }
