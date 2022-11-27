@@ -23,7 +23,11 @@ async function run() {
 
     //product part here
     app.get("/products", async (req, res) => {
-      const query = {};
+      const uid = req.query.uid;
+      let query = {};
+      if (uid) {
+        query = { uid: uid };
+      }
       const products = await productsCollection.find(query).toArray();
       res.send(products);
     });
