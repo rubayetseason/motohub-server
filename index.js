@@ -62,6 +62,13 @@ async function run() {
     });
 
     //advertise part here
+
+    app.get("/advertise", async (req, res) => {
+      const query = {};
+      const result = await advertiseCollection.find(query).toArray();
+      res.send(result);
+    });
+
     app.post("/advertise", async (req, res) => {
       const product = req.body;
       const result = await advertiseCollection.insertOne(product);
