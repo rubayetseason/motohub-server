@@ -20,6 +20,7 @@ async function run() {
   try {
     const productsCollection = client.db("motoHub").collection("bikes");
     const bookingsCollection = client.db("motoHub").collection("bookings");
+    const advertiseCollection = client.db("motoHub").collection("advertise");
 
     //product part here
     app.get("/products", async (req, res) => {
@@ -57,6 +58,13 @@ async function run() {
     app.post("/bookings", async (req, res) => {
       const booking = req.body;
       const result = await bookingsCollection.insertOne(booking);
+      res.send(result);
+    });
+
+    //advertise part here
+    app.post("/advertise", async (req, res) => {
+      const product = req.body;
+      const result = await advertiseCollection.insertOne(product);
       res.send(result);
     });
   } finally {
