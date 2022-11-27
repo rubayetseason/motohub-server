@@ -21,6 +21,7 @@ async function run() {
     const productsCollection = client.db("motoHub").collection("bikes");
     const bookingsCollection = client.db("motoHub").collection("bookings");
     const advertiseCollection = client.db("motoHub").collection("advertise");
+    const usersCollection = client.db("motoHub").collection("users");
 
     //product part here
     app.get("/products", async (req, res) => {
@@ -81,6 +82,15 @@ async function run() {
       const result = await advertiseCollection.insertOne(product);
       res.send(result);
     });
+
+    //users part here
+
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
   } finally {
   }
 }
