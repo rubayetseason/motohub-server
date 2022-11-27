@@ -85,12 +85,21 @@ async function run() {
 
     //users part here
 
+    app.get("/users", async (req, res) => {
+      const role = req.query.role;
+      let query = {};
+      if (role) {
+        query = { role: role };
+      }
+      const result = await usersCollection.find(query).toArray();
+      res.send(result);
+    });
+
     app.post("/users", async (req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
       res.send(result);
     });
-
   } finally {
   }
 }
