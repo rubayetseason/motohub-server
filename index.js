@@ -24,6 +24,7 @@ async function run() {
     const advertiseCollection = client.db("motoHub").collection("advertise");
     const usersCollection = client.db("motoHub").collection("users");
     const paymentsCollection = client.db("motoHub").collection("payments");
+    const wishlistCollection = client.db("motoHub").collection("wishlist");
 
     //product part here
     app.get("/products", async (req, res) => {
@@ -149,6 +150,26 @@ async function run() {
         filter,
         updatedDoc
       );
+      res.send(result);
+    });
+
+    //wishlist part here
+    // app.post("/users", async (req, res) => {
+    //   const user = req.body;
+    //   const result = await usersCollection.insertOne(user);
+    //   res.send(result);
+    // });
+
+    app.get("/wishlist", async (req, res) => {
+      const uid = req.query.uid;
+      const query = { uid: uid };
+      const result = await wishlistCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    app.post("/wishlist", async (req, res) => {
+      const product = req.body;
+      const result = await wishlistCollection.insertOne(product);
       res.send(result);
     });
   } finally {
